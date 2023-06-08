@@ -27,7 +27,7 @@ export default Home;
 
 export const getServerSideProps = async () => {
 	const { data } = await axios.get(
-		`https://imdb-api.com/en/API/AdvancedSearch/k_m5qd5xg3?title_type=feature&count=50`
+		`https://imdb-api.com/en/API/AdvancedSearch/${serverRuntimeConfig.apiKey}?title_type=feature&count=10`
 	);
 
 	return {
