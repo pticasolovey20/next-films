@@ -14,3 +14,13 @@ body {
 		display: none;
 	}
 }
+
+.separator[data-orientation="horizontal"] {
+	height: 1px;
+	width: 100%;
+}
+
+.separator[data-orientation="vertical"] {
+	height: 80%;
+	width: 1px;
+}
