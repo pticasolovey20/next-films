@@ -1,9 +1,10 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Separator from "@radix-ui/react-separator";
+import { classNames } from "@/utils";
+
+import RadioGroupComponent from "../radio-group";
 
 import styles from "./Navigation.module.scss";
-
-import { classNames } from "@/utils";
 
 const NavigationComponent = () => {
 	return (
@@ -20,7 +21,21 @@ const NavigationComponent = () => {
 							styles.content
 						)}
 					>
-						<ul className={classNames("grid p-4 m-0 gap-x-2.5", styles.one)}>1</ul>
+						<ul className={classNames("grid grid-cols-2 p-4 m-0 gap-x-2.5", styles.one)}>
+							<div className="p-4">
+								<RadioGroupComponent />
+							</div>
+							<div>
+								<ListItem href="#" title="FIRST">
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+									incididunt ut labore et dolore magna aliqua
+								</ListItem>
+								<ListItem href="#" title="SECOND">
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+									incididunt ut labore et dolore magna aliqua
+								</ListItem>
+							</div>
+						</ul>
 					</NavigationMenu.Content>
 				</NavigationMenu.Item>
 
@@ -37,7 +52,28 @@ const NavigationComponent = () => {
 							styles.content
 						)}
 					>
-						<ul className={classNames("grid p-4 m-0 gap-x-2.5", styles.two)}>2</ul>
+						<ul className={classNames("grid grid-cols-2 p-4 m-0 gap-x-2.5", styles.two)}>
+							<ListItem title="FIRST" href="#">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua
+							</ListItem>
+							<ListItem title="SECOND" href="#">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua
+							</ListItem>
+							<ListItem title="THIRD" href="#">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua
+							</ListItem>
+							<ListItem title="FOURTH" href="#">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua
+							</ListItem>
+							<ListItem title="FIFTH" href="#">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua
+							</ListItem>
+						</ul>
 					</NavigationMenu.Content>
 				</NavigationMenu.Item>
 
@@ -54,7 +90,25 @@ const NavigationComponent = () => {
 							styles.content
 						)}
 					>
-						<ul className={classNames("grid p-4 m-0 gap-x-2.5", styles.one)}>3</ul>
+						<ul className={classNames("grid p-4 m-0 gap-x-2.5", styles.one)}>
+							<li className="row-span-3">
+								<div className="flex h-[95%] rounded-md overflow-hidden">
+									<img
+										className="aspect-square object-cover"
+										src="https://images.unsplash.com/photo-1535025183041-0991a977e25b?w=300&dpr=2&q=80"
+										alt="some"
+									/>
+								</div>
+							</li>
+							<ListItem href="#" title="FIRST">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua
+							</ListItem>
+							<ListItem href="#" title="SECOND">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua
+							</ListItem>
+						</ul>
 					</NavigationMenu.Content>
 				</NavigationMenu.Item>
 
@@ -80,5 +134,19 @@ const NavigationComponent = () => {
 		</NavigationMenu.Root>
 	);
 };
+
+const ListItem = ({ className, children, title, ...props }) => (
+	<li>
+		<NavigationMenu.Link asChild>
+			<a
+				className={classNames("text-[15px] block p-3 rounded-md outline-none select-none", className)}
+				{...props}
+			>
+				<div className="font-semibold mb-1">{title}</div>
+				<p className="text-gray-400">{children}</p>
+			</a>
+		</NavigationMenu.Link>
+	</li>
+);
 
 export default NavigationComponent;
