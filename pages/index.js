@@ -3,7 +3,9 @@ import getConfig from "next/config";
 import axios from "axios";
 
 import Layout from "@/components/layout";
+import * as Separator from "@radix-ui/react-separator";
 import Movie from "@/components/movie";
+import NavigationComponent from "@/components/ui/navigation/Navigation";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -16,6 +18,20 @@ const Home = (data) => {
 
 	return (
 		<Layout>
+			<div className="flex justify-between">
+				<div className="flex gap-4">
+					<h1 className="flex text-[24px]">Popular movies</h1>
+					<button className="pt-2">all</button>
+				</div>
+				<div className="flex justify-end">
+					<NavigationComponent />
+				</div>
+			</div>
+			<Separator.Root
+				className="my-4 bg-gray-600 separator"
+				style={{ height: "2px" }}
+				data-orientation="horizontal"
+			/>
 			<div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
 				{movies?.length && movies.map((movie) => <Movie key={movie.id} {...movie} />)}
 			</div>
