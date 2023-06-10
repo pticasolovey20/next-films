@@ -18,15 +18,14 @@ const Home = (data) => {
 
 	return (
 		<Layout>
-			<NavigationComponent />
+			<div>
+				<NavigationComponent />
+			</div>
 			<div className="flex justify-between">
 				<div className="flex items-center gap-4">
 					<h1 className="flex text-[24px]">Popular movies</h1>
 					<button className="pt-2">all</button>
 				</div>
-				{/* <div className="flex justify-end">
-					<NavigationComponent />
-				</div> */}
 			</div>
 			<Separator.Root
 				className="my-4 bg-gray-600 separator"
