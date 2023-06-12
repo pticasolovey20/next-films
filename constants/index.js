@@ -28,3 +28,71 @@ export const genres = [
 	{ id: 25, option: "Romance" },
 	{ id: 26, option: "Thriller" },
 ];
+
+export const movies = [
+	{
+		title: "John Wick: Chapter 4",
+		description: "(2023)",
+		genreList: [
+			{ key: "Action", value: "Action" },
+			{ key: "Crime", value: "Crime" },
+			{ key: "Thriller", value: "Thriller" },
+		],
+		id: "tt10366206",
+		imDbRating: "7.9",
+		image: "https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00NGIwLWJhMTEtOTdkZGFjNmZiMTEwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_Ratio0.6837_AL_.jpg",
+		runtimeStr: "169 min",
+	},
+	{
+		title: "Fast X",
+		description: "(2023)",
+		genreList: [
+			{ key: "Action", value: "Action" },
+			{ key: "Adventure", value: "Adventure" },
+			{ key: "Crime", value: "Crime" },
+		],
+		id: "tt5433140",
+		imDbRating: "6.1",
+		image: "https://m.media-amazon.com/images/M/MV5BNzZmOTU1ZTEtYzVhNi00NzQxLWI5ZjAtNWNhNjEwY2E3YmZjXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_Ratio0.6837_AL_.jpg",
+		runtimeStr: "141 min",
+	},
+	{
+		title: "Guardians of the Galaxy Vol. 3",
+		description: "(2023)",
+		genreList: [
+			{ key: "Action", value: "Action" },
+			{ key: "Adventure", value: "Adventure" },
+			{ key: "Comedy", value: "Comedy" },
+		],
+		id: "tt6791350",
+		imDbRating: "8.2",
+		image: "https://m.media-amazon.com/images/M/MV5BMDgxOTdjMzYtZGQxMS00ZTAzLWI4Y2UtMTQzN2VlYjYyZWRiXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_Ratio0.6837_AL_.jpg",
+		runtimeStr: "150 min",
+	},
+	{
+		title: "Dungeons & Dragons: Honor Among Thieves",
+		description: "(2023)",
+		genreList: [
+			{ key: "Adventure", value: "Adventure" },
+			{ key: "Family", value: "Family" },
+			{ key: "Fantasy", value: "Fantasy" },
+		],
+		id: "tt2906216",
+		imDbRating: "7.3",
+		image: "https://m.media-amazon.com/images/M/MV5BNmFkN2M2NzItOTY5YS00MmE2LTk3ZjctNTk2YzQ5ZmRiYzJjXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_Ratio0.6837_AL_.jpg",
+		runtimeStr: "134 min",
+	},
+	{
+		title: "The Little Mermaid",
+		description: "(2023)",
+		genreList: [
+			{ key: "Adventure", value: "Adventure" },
+			{ key: "Family", value: "Family" },
+			{ key: "Fantasy", value: "Fantasy" },
+		],
+		id: "tt5971474",
+		imDbRating: "7.2",
+		image: "https://m.media-amazon.com/images/M/MV5BYTUxYjczMWUtYzlkZC00NTcwLWE3ODQtN2I2YTIxOTU0ZTljXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_Ratio0.6837_AL_.jpg",
+		runtimeStr: "135 min",
+	},
+];

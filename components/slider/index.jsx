@@ -1,27 +1,22 @@
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import Link from "next/link";
+
 import { classNames } from "@/utils";
-
-const def = "h-[390px] bg-dark-100 shadow-sm shadow-black/75";
-const genres = ["Genre 1 |", "Genre 2 |", "Genre 3 |", "Genre 4 |", "Genre 5"];
-const rating = 74;
-
-const link_1 =
-	"https://m.media-amazon.com/images/M/MV5BOWIwZGY0OTYtZjUzYy00NzRmLTg5YzgtYWMzNWQ0MmZiY2MwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_Ratio0.6837_AL_.jpg";
-
-const link_2 =
-	"https://m.media-amazon.com/images/M/MV5BNzZmOTU1ZTEtYzVhNi00NzQxLWI5ZjAtNWNhNjEwY2E3YmZjXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_Ratio0.6837_AL_.jpg";
-
-const link_3 =
-	"https://m.media-amazon.com/images/M/MV5BMDgxOTdjMzYtZGQxMS00ZTAzLWI4Y2UtMTQzN2VlYjYyZWRiXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_Ratio0.6837_AL_.jpg";
+import { movies } from "@/constants";
 
 const SliderComponent = () => {
 	return (
-		<div className="absolute w-full grid grid-cols-12 gap-4">
+		<div className="absolute w-full flex gap-4">
 			<div
-				className={classNames(def, "col-span-2", "bg-cover bg-right-top")}
-				style={{ backgroundImage: `url(${link_1})` }}
+				className={classNames(
+					"h-[390px] w-[14%]",
+					"shadow-sm shadow-black/75",
+					"bg-dark-100 bg-cover bg-right-top"
+				)}
+				style={{ backgroundImage: `url(${movies[1].image})` }}
 			>
+				<div className="absolute top-0 left-0 w-full h-full bg-dark-100/75" />
 				<button onClick={() => console.log("prev")} className="absolute top-[43%] left-[10%]">
 					<svg width="45" height="45" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
@@ -33,30 +28,40 @@ const SliderComponent = () => {
 					</svg>
 				</button>
 			</div>
+
 			<div
-				className={classNames(def, "col-span-8", "bg-cover bg-center", "relative")}
-				style={{ backgroundImage: `url(${link_2})`, backdropFilter: "blur(5px)" }}
+				className={classNames(
+					"relative h-[390px] flex-1",
+					"shadow-sm shadow-black/75",
+					"bg-dark-100 bg-cover bg-center"
+				)}
+				style={{ backgroundImage: `url(${movies[2].image})`, backdropFilter: "blur(3px)" }}
 			>
-				<div className="absolute inset-0" style={{ backdropFilter: "blur(5px)" }}>
+				<div className="absolute top-0 left-0 w-full h-full bg-dark-100/75" />
+				<div className="absolute inset-0" style={{ backdropFilter: "blur(3px)" }}>
 					<div className="absolute inset-0 flex justify-between">
 						<div className="flex flex-col gap-8 p-4">
 							<div>
 								<div className="flex items-center gap-4">
-									<h1 className="text-[28px]">Film: Super Long Title Film</h1>
-									<p className="mt-3 text-dark-600">2023</p>
+									<Link href="#" className="text-[28px]">
+										{movies[2].title}
+									</Link>
+									<p className="mt-3 text-dark-600">{movies[2].description.replace(/\D/g, "")}</p>
 								</div>
-								<p className="text-[17px] text-dark-600">Film: Title Film (other lang)</p>
+								<p className="text-[17px] text-dark-600">{movies[2].title}</p>
 							</div>
 							<ul className="flex gap-2 text-[14px]">
-								{genres.map((genre) => (
-									<li key={genre}>{genre}</li>
+								{movies[2].genreList.map(({ value }, index) => (
+									<li key={value}>
+										{value} {index < movies[2].genreList.length - 1 && "|"}
+									</li>
 								))}
 							</ul>
-							<div className="flex gap-4 items-end">
+							<div className="flex items-end gap-4">
 								<div className="h-[100px] aspect-square">
 									<CircularProgressbar
-										value={rating}
-										text={rating / 10}
+										value={parseFloat(movies[2].imDbRating) * 10}
+										text={parseFloat(movies[2].imDbRating)}
 										strokeWidth={7}
 										styles={buildStyles({
 											strokeLinecap: "butt",
@@ -68,7 +73,7 @@ const SliderComponent = () => {
 								</div>
 								<div className="flex flex-col gap-1 text-[14px]">
 									<div className="flex items-center gap-3">
-										<p>Rating MIXFILM: </p>
+										<p>Rating MIXFILM: null</p>
 										<div className="flex gap-[2px] cursor-pointer">
 											{Array.from({ length: 10 }).map((_, index) => (
 												<svg
@@ -87,7 +92,7 @@ const SliderComponent = () => {
 										</div>
 									</div>
 									<div className="flex gap-1">
-										<p>Rating IMDb: 7.4</p>
+										<p>Rating IMDb: null</p>
 										<div className="flex items-center justify-center">
 											<svg
 												width="15"
@@ -102,23 +107,27 @@ const SliderComponent = () => {
 												></path>
 											</svg>
 										</div>
-										<p>MIXFILM: 7.4</p>
+										<p>MIXFILM: null</p>
 									</div>
-									<p>Comments:</p>
-									<p>Country: United Kingdom</p>
+									<p>Comments: null</p>
+									<p>Country: null</p>
 								</div>
 							</div>
 						</div>
 						<div className="w-[230px] m-4 overflow-hidden">
-							<img className="object-cover" src={link_2} alt="movie" />
+							<img className="object-cover" src={movies[2].image} alt="movie" />
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div
-				className={classNames(def, "col-span-2", "bg-cover bg-left-top")}
-				style={{ backgroundImage: `url(${link_3})` }}
+				className={classNames(
+					"h-[390px] w-[14%]",
+					"shadow-sm shadow-black/75",
+					"bg-dark-100 bg-cover bg-left-top"
+				)}
+				style={{ backgroundImage: `url(${movies[3].image})` }}
 			>
 				<button onClick={() => console.log("next")} className="absolute top-[43%] right-[10%]">
 					<svg width="45" height="45" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -136,3 +145,15 @@ const SliderComponent = () => {
 };
 
 export default SliderComponent;
+
+export const getServerSideProps = async () => {
+	const { data } = await axios.get(
+		`https://imdb-api.com/en/API/AdvancedSearch/${serverRuntimeConfig.apiKey}?title_type=feature?genres=action&count=10`
+	);
+
+	return {
+		props: {
+			movies: data,
+		},
+	};
+};
