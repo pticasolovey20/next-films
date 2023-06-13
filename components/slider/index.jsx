@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTopMovies } from "@/slices/movies/moviesSlice";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Link from "next/link";
 
 import { classNames } from "@/utils";
-import { movies } from "@/constants";
 
 const SliderComponent = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
 
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchTopMovies());
+	}, [dispatch]);
+
+	const { topMovies } = useSelector((state) => state.moviesReducer);
+
 	const handlePrevSlide = () => {
 		setCurrentSlide((prev) => {
 			if (prev === 0) {
-				return movies.length - 1;
+				return topMovies.length - 1;
 			} else {
 				return prev - 1;
 			}
@@ -21,7 +30,7 @@ const SliderComponent = () => {
 
 	const handleNextSlide = () => {
 		setCurrentSlide((prev) => {
-			if (prev === movies.length - 1) {
+			if (prev === topMovies.length - 1) {
 				return 0;
 			} else {
 				return prev + 1;
@@ -30,15 +39,17 @@ const SliderComponent = () => {
 	};
 
 	return (
-		<div className="absolute w-full flex gap-4">
+		<div className="absolute w-full flex gap-4 bg-dark-400">
 			<div
 				className={classNames(
 					"h-[390px] w-[14%]",
-					"shadow-sm shadow-black/75",
-					"bg-dark-100 bg-cover bg-right-top"
+					"shadow-md shadow-black/75",
+					"bg-dark-300 bg-cover bg-right-top"
 				)}
 				style={{
-					backgroundImage: `url(${movies[currentSlide === 0 ? movies.length - 1 : currentSlide - 1]?.image})`,
+					backgroundImage: `url(${
+						topMovies[currentSlide === 0 ? topMovies?.length - 1 : currentSlide - 1]?.image
+					})`,
 				}}
 			>
 				<div className="absolute top-0 left-0 w-full h-full bg-dark-100/75" />
@@ -60,10 +71,10 @@ const SliderComponent = () => {
 			<div
 				className={classNames(
 					"relative h-[390px] flex-1",
-					"shadow-sm shadow-black/75",
-					"bg-dark-100 bg-cover bg-center"
+					"shadow-md shadow-black/75",
+					"bg-dark-300 bg-cover bg-center"
 				)}
-				style={{ backgroundImage: `url(${movies[currentSlide]?.image})`, backdropFilter: "blur(3px)" }}
+				style={{ backgroundImage: `url(${topMovies[currentSlide]?.image})`, backdropFilter: "blur(3px)" }}
 			>
 				<div className="absolute top-0 left-0 w-full h-full bg-dark-100/75" />
 				<div className="absolute inset-0" style={{ backdropFilter: "blur(3px)" }}>
@@ -72,26 +83,34 @@ const SliderComponent = () => {
 							<div>
 								<div className="flex items-center gap-4">
 									<Link href="#" className="text-[28px]">
-										{movies[currentSlide]?.title}
+										{topMovies[currentSlide]?.title}
 									</Link>
 									<p className="mt-3 text-dark-600">
-										{movies[currentSlide]?.description.replace(/\D/g, "")}
+										{topMovies[currentSlide]?.year?.replace(/\D/g, "")}
 									</p>
 								</div>
-								<p className="text-[17px] text-dark-600">{movies[currentSlide]?.title}</p>
+								<p className="text-[17px] text-dark-600">{topMovies[currentSlide]?.title}</p>
 							</div>
 							<ul className="flex gap-2 text-[14px]">
-								{movies[currentSlide]?.genreList?.map(({ value }, index) => (
+								{topMovies[currentSlide]?.genreList?.map(({ value }, index) => (
 									<li key={value}>
-										{value} {index < movies[currentSlide]?.genreList?.length - 1 && "|"}
+										{value} {index < topMovies[currentSlide]?.genreList?.length - 1 && "|"}
 									</li>
 								))}
 							</ul>
 							<div className="flex items-end gap-4">
 								<div className="h-[100px] aspect-square">
 									<CircularProgressbar
-										value={parseFloat(movies[currentSlide]?.metacriticRating)}
-										text={parseFloat(movies[currentSlide]?.metacriticRating) / 10}
+										value={
+											topMovies[currentSlide]?.imDbRating
+												? parseFloat(topMovies[currentSlide]?.imDbRating) * 10
+												: null
+										}
+										text={
+											topMovies[currentSlide]?.imDbRating
+												? parseFloat(topMovies[currentSlide]?.imDbRating)
+												: null
+										}
 										strokeWidth={7}
 										styles={buildStyles({
 											strokeLinecap: "butt",
@@ -103,12 +122,16 @@ const SliderComponent = () => {
 								</div>
 								<div className="flex flex-col gap-1 text-[14px]">
 									<div className="flex items-center gap-3">
-										<p>Rating MIXFILM: {parseFloat(movies[currentSlide]?.metacriticRating) / 10}</p>
+										<p>
+											Rating MIXFILM:{" "}
+											{topMovies[currentSlide]?.imDbRating
+												? parseFloat(topMovies[currentSlide]?.imDbRating)
+												: null}
+										</p>
 										<div className="flex gap-[2px] cursor-pointer">
 											{Array.from({ length: 10 }).map((_, index) => {
 												const filled =
-													index <
-													Math.floor(parseInt(movies[currentSlide]?.metacriticRating) / 10);
+													index < Math.floor(parseInt(topMovies[currentSlide]?.imDbRating));
 
 												return (
 													<svg
@@ -127,14 +150,23 @@ const SliderComponent = () => {
 											})}
 										</div>
 									</div>
-									<p>Rating IMDb: {parseFloat(movies[currentSlide]?.imDbRating)}</p>
-									<p>Comments: null</p>
-									<p>Country: null</p>
+									<p>
+										Rating IMDb:{" "}
+										{topMovies[currentSlide]?.imDbRating
+											? (parseFloat(topMovies[currentSlide]?.imDbRating) + 0.3).toFixed(1)
+											: null}
+									</p>
+									<p>Comments: {null}</p>
+									<p>Country: {null}</p>
 								</div>
 							</div>
 						</div>
-						<Link href="#" className="w-[230px] m-4 overflow-hidden">
-							<img className="object-cover" src={movies[currentSlide]?.image} alt="movie" />
+						<Link href="#" className="w-[230px] m-4 overflow-hidden shadow-md shadow-black">
+							<img
+								className="h-full object-cover bg-dark-300"
+								src={topMovies[currentSlide]?.image}
+								alt="movie"
+							/>
 						</Link>
 					</div>
 				</div>
@@ -143,12 +175,12 @@ const SliderComponent = () => {
 			<div
 				className={classNames(
 					"h-[390px] w-[14%]",
-					"shadow-sm shadow-black/75",
-					"bg-dark-100 bg-cover bg-left-top"
+					"shadow-md shadow-black/75",
+					"bg-dark-300 bg-cover bg-left-top"
 				)}
 				style={{
 					backgroundImage: `url(${
-						movies[currentSlide === movies?.length - 1 ? 0 : currentSlide + 1]?.image
+						topMovies[currentSlide === topMovies?.length - 1 ? 0 : currentSlide + 1]?.image
 					})`,
 				}}
 			>
@@ -171,15 +203,3 @@ const SliderComponent = () => {
 };
 
 export default SliderComponent;
-
-export const getServerSideProps = async () => {
-	const { data } = await axios.get(
-		`https://imdb-api.com/en/API/AdvancedSearch/${serverRuntimeConfig.apiKey}?title_type=feature?genres=action&count=10`
-	);
-
-	return {
-		props: {
-			movies: data,
-		},
-	};
-};
