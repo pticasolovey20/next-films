@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import getConfig from "next/config";
-import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "@/slices/movies/moviesSlice";
 
 import * as Separator from "@radix-ui/react-separator";
 import Layout from "@/components/layout";
@@ -8,14 +8,17 @@ import NavigationComponent from "@/components/ui/navigation/Navigation";
 import InputComponent from "@/components/ui/input";
 import Movie from "@/components/movie";
 
-const { serverRuntimeConfig } = getConfig();
+const Home = () => {
+	const dispatch = useDispatch();
 
-const Home = (data) => {
-	const [movies, setMovies] = useState([]);
+	const type = "feature";
+	const count = 10;
 
 	useEffect(() => {
-		setMovies(data?.movies?.results);
-	}, [data]);
+		dispatch(fetchMovies({ type, count }));
+	}, [dispatch]);
+
+	const { movies } = useSelector((state) => state.moviesReducer);
 
 	return (
 		<Layout>
@@ -39,15 +42,3 @@ const Home = (data) => {
 };
 
 export default Home;
-
-export const getServerSideProps = async () => {
-	const { data } = await axios.get(
-		`https://imdb-api.com/en/API/AdvancedSearch/${serverRuntimeConfig.apiKey}?title_type=feature&count=10`
-	);
-
-	return {
-		props: {
-			movies: data,
-		},
-	};
-};

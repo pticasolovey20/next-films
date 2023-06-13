@@ -7,14 +7,14 @@ module.exports = nextConfig;
 
 module.exports = {
 	env: {
-		apiKey: process.env.API_KEY,
+		apiKey: process.env.NEXT_PUBLIC_API_KEY,
 	},
 
 	serverRuntimeConfig: {
-		apiKey: process.env.API_KEY,
+		apiKey: process.env.NEXT_PUBLIC_API_KEY,
 	},
 
 	publicRuntimeConfig: {
-		apiKey: process.env.API_KEY,
+		apiKey: process.env.NEXT_PUBLIC_API_KEY,
 	},
 };
