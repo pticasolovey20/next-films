@@ -1,4 +1,4 @@
-const Serial = ({ name, poster_path, genres, vote_average, first_air_date }) => {
+const Serial = ({ name, poster_path, genres, first_air_date, vote_average }) => {
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
 	const PATH = `${BASE_URL}${poster_path}`;
 
