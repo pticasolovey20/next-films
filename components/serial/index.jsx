@@ -1,13 +1,13 @@
-const Movie = ({ title, poster_path, genres, vote_average, release_date }) => {
+const Serial = ({ name, poster_path, genres, vote_average, first_air_date }) => {
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
 	const PATH = `${BASE_URL}${poster_path}`;
 
 	return (
 		<div className="flex flex-col">
-			<img className="flex-1 object-cover cursor-pointer" src={PATH} alt={title} />
+			<img className="flex-1 object-cover cursor-pointer" src={PATH} alt={name} />
 			<div className="flex flex-col gap-3 p-4 bg-dark-100">
 				<div className="flex flex-col">
-					<h3 className="w-full truncate font-semibold text-[18px]">{title}</h3>
+					<h3 className="w-full truncate font-semibold text-[18px]">{name}</h3>
 					<p className="w-full truncate text-[15px] text-dark-400">{genres?.replace(/,/g, " | ")}</p>
 				</div>
 				<div className="flex justify-between text-[14px]">
@@ -20,11 +20,11 @@ const Movie = ({ title, poster_path, genres, vote_average, release_date }) => {
 						</svg>
 						<p>{vote_average}</p>
 					</div>
-					<p>{release_date?.slice(0, 4)}</p>
+					<p>{first_air_date?.slice(0, 4)}</p>
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default Movie;
+export default Serial;

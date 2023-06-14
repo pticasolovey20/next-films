@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchTopMovies } from "@/slices/movies/moviesSlice";
+import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { useSelector } from "react-redux";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+
 import Link from "next/link";
 
 import { classNames } from "@/utils";
@@ -10,18 +11,23 @@ import { classNames } from "@/utils";
 const SliderComponent = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
 
-	const dispatch = useDispatch();
+	const { movies } = useSelector((state) => state.dataReducer);
 
-	useEffect(() => {
-		dispatch(fetchTopMovies());
-	}, [dispatch]);
+	const BASE_URL = "https://image.tmdb.org/t/p/original";
+	const BACK_PATH = `${BASE_URL}${movies[currentSlide]?.backdrop_path}`;
+	const POSTER_PATH = `${BASE_URL}${movies[currentSlide]?.poster_path}`;
 
-	const { topMovies } = useSelector((state) => state.moviesReducer);
+	const PREV_POSTER_PATH = `${BASE_URL}${
+		movies[currentSlide === 0 ? movies?.length - 1 : currentSlide - 1]?.poster_path
+	}`;
+	const NEXT_POSTER_PATH = `${BASE_URL}${
+		movies[currentSlide === movies?.length - 1 ? 0 : currentSlide + 1]?.poster_path
+	}`;
 
 	const handlePrevSlide = () => {
 		setCurrentSlide((prev) => {
 			if (prev === 0) {
-				return topMovies.length - 1;
+				return movies.length - 1;
 			} else {
 				return prev - 1;
 			}
@@ -30,7 +36,7 @@ const SliderComponent = () => {
 
 	const handleNextSlide = () => {
 		setCurrentSlide((prev) => {
-			if (prev === topMovies.length - 1) {
+			if (prev === movies.length - 1) {
 				return 0;
 			} else {
 				return prev + 1;
@@ -47,9 +53,7 @@ const SliderComponent = () => {
 					"bg-dark-300 bg-cover bg-right-top"
 				)}
 				style={{
-					backgroundImage: `url(${
-						topMovies[currentSlide === 0 ? topMovies?.length - 1 : currentSlide - 1]?.image
-					})`,
+					backgroundImage: `url(${PREV_POSTER_PATH})`,
 				}}
 			>
 				<div className="absolute top-0 left-0 w-full h-full bg-dark-100/75" />
@@ -74,43 +78,34 @@ const SliderComponent = () => {
 					"shadow-md shadow-black/75",
 					"bg-dark-300 bg-cover bg-center"
 				)}
-				style={{ backgroundImage: `url(${topMovies[currentSlide]?.image})`, backdropFilter: "blur(3px)" }}
+				style={{ backgroundImage: `url(${BACK_PATH})`, backdropFilter: "blur(3px)" }}
 			>
-				<div className="absolute top-0 left-0 w-full h-full bg-dark-100/75" />
+				<div className="absolute top-0 left-0 w-full h-full bg-dark-100/50" />
 				<div className="absolute inset-0" style={{ backdropFilter: "blur(3px)" }}>
 					<div className="absolute inset-0 flex justify-between select-none">
 						<div className="flex flex-col gap-8 p-4">
 							<div>
 								<div className="flex items-center gap-4">
 									<Link href="#" className="text-[28px]">
-										{topMovies[currentSlide]?.title}
+										{movies[currentSlide]?.title}
 									</Link>
 									<p className="mt-3 text-dark-600">
-										{topMovies[currentSlide]?.year?.replace(/\D/g, "")}
+										{movies[currentSlide]?.release_date?.slice(0, 4)}
 									</p>
 								</div>
-								<p className="text-[17px] text-dark-600">{topMovies[currentSlide]?.title}</p>
+								<p className="text-[17px] text-dark-600">{movies[currentSlide]?.title}</p>
 							</div>
 							<ul className="flex gap-2 text-[14px]">
-								{topMovies[currentSlide]?.genreList?.map(({ value }, index) => (
-									<li key={value}>
-										{value} {index < topMovies[currentSlide]?.genreList?.length - 1 && "|"}
-									</li>
-								))}
+								{movies[currentSlide]?.genres?.replace(/,/g, " | ")}
 							</ul>
 							<div className="flex items-end gap-4">
 								<div className="h-[100px] aspect-square">
 									<CircularProgressbar
 										value={
-											topMovies[currentSlide]?.imDbRating
-												? parseFloat(topMovies[currentSlide]?.imDbRating) * 10
-												: null
+											movies[currentSlide]?.vote_average &&
+											movies[currentSlide]?.vote_average * 10
 										}
-										text={
-											topMovies[currentSlide]?.imDbRating
-												? parseFloat(topMovies[currentSlide]?.imDbRating)
-												: null
-										}
+										text={movies[currentSlide]?.vote_average && movies[currentSlide]?.vote_average}
 										strokeWidth={7}
 										styles={buildStyles({
 											strokeLinecap: "butt",
@@ -121,17 +116,14 @@ const SliderComponent = () => {
 									/>
 								</div>
 								<div className="flex flex-col gap-1 text-[14px]">
-									<div className="flex items-center gap-3">
+									<div className="flex flex-col items-start gap-2">
 										<p>
-											Rating MIXFILM:{" "}
-											{topMovies[currentSlide]?.imDbRating
-												? parseFloat(topMovies[currentSlide]?.imDbRating)
-												: null}
+											Rating IMDb:{" "}
+											{movies[currentSlide]?.vote_average && movies[currentSlide]?.vote_average}
 										</p>
 										<div className="flex gap-[2px] cursor-pointer">
 											{Array.from({ length: 10 }).map((_, index) => {
-												const filled =
-													index < Math.floor(parseInt(topMovies[currentSlide]?.imDbRating));
+												const filled = index < Math.floor(movies[currentSlide]?.vote_average);
 
 												return (
 													<svg
@@ -150,23 +142,13 @@ const SliderComponent = () => {
 											})}
 										</div>
 									</div>
-									<p>
-										Rating IMDb:{" "}
-										{topMovies[currentSlide]?.imDbRating
-											? (parseFloat(topMovies[currentSlide]?.imDbRating) + 0.3).toFixed(1)
-											: null}
-									</p>
 									<p>Comments: {null}</p>
 									<p>Country: {null}</p>
 								</div>
 							</div>
 						</div>
 						<Link href="#" className="w-[230px] m-4 overflow-hidden shadow-md shadow-black">
-							<img
-								className="h-full object-cover bg-dark-300"
-								src={topMovies[currentSlide]?.image}
-								alt="movie"
-							/>
+							<img className="h-full object-cover bg-dark-300" src={POSTER_PATH} alt="movie" />
 						</Link>
 					</div>
 				</div>
@@ -179,9 +161,7 @@ const SliderComponent = () => {
 					"bg-dark-300 bg-cover bg-left-top"
 				)}
 				style={{
-					backgroundImage: `url(${
-						topMovies[currentSlide === topMovies?.length - 1 ? 0 : currentSlide + 1]?.image
-					})`,
+					backgroundImage: `url(${NEXT_POSTER_PATH})`,
 				}}
 			>
 				<button
