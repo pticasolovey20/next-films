@@ -1,8 +1,8 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Separator from "@radix-ui/react-separator";
-import { classNames } from "@/utils";
-
 import styles from "./Navigation.module.scss";
+
+import { classNames } from "@/utils";
 
 const NavigationComponent = () => {
 	return (

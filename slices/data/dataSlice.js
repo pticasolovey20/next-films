@@ -77,31 +77,31 @@ const dataSlice = createSlice({
 		//
 
 		builder.addCase(fetchMoviesWithGenres.pending, (state) => {
-			// state.loading = true;
+			state.loading = true;
 			state.error = null;
 		});
 		builder.addCase(fetchMoviesWithGenres.fulfilled, (state, action) => {
 			state.movies = action.payload;
-			// state.loading = false;
+			state.loading = false;
 		});
 		builder.addCase(fetchMoviesWithGenres.rejected, (state, action) => {
 			state.error = action.payload;
-			// state.loading = false;
+			state.loading = false;
 		});
 
 		//
 
 		builder.addCase(fetchTvSerialsWithGenres.pending, (state) => {
-			// state.loading = true;
+			state.loading = true;
 			state.error = null;
 		});
 		builder.addCase(fetchTvSerialsWithGenres.fulfilled, (state, action) => {
 			state.serials = action.payload;
-			// state.loading = false;
+			state.loading = false;
 		});
 		builder.addCase(fetchTvSerialsWithGenres.rejected, (state, action) => {
 			state.error = action.payload;
-			// state.loading = false;
+			state.loading = false;
 		});
 	},
 });

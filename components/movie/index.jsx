@@ -3,7 +3,7 @@ const Movie = ({ title, poster_path, genres, vote_average, release_date }) => {
 	const PATH = `${BASE_URL}${poster_path}`;
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col select-none">
 			<img className="flex-1 object-cover cursor-pointer" src={PATH} alt={title} />
 			<div className="flex flex-col gap-3 p-4 bg-dark-100">
 				<div className="flex flex-col">
