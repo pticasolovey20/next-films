@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useMedia } from "use-media";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -24,8 +23,27 @@ const SliderComponent = () => {
 		movies[currentSlide === movies?.length - 1 ? 0 : currentSlide + 1]?.poster_path
 	}`;
 
-	const isWide = useMedia({ minWidth: "590px" });
-	const isPicture = useMedia({ minWidth: "920px" });
+	const [hidden, setHidden] = useState(false);
+	const [wide, setWide] = useState(false);
+
+	useEffect(() => {
+		const mediaQueryHidden = window.matchMedia("(min-width: 920px)");
+		const mediaQueryWide = window.matchMedia("(min-width: 590px)");
+
+		const handleHiddenMediaChange = (event) => setHidden(event.matches);
+		const handleWideMediaChange = (event) => setWide(event.matches);
+
+		mediaQueryHidden.addEventListener("change", handleHiddenMediaChange);
+		mediaQueryWide.addEventListener("change", handleWideMediaChange);
+
+		setHidden(mediaQueryHidden.matches);
+		setWide(mediaQueryWide.matches);
+
+		return () => {
+			mediaQueryHidden.removeEventListener("change", handleHiddenMediaChange);
+			mediaQueryWide.removeEventListener("change", handleWideMediaChange);
+		};
+	}, []);
 
 	const handlePrevSlide = () => {
 		setCurrentSlide((prev) => {
@@ -48,7 +66,7 @@ const SliderComponent = () => {
 	};
 
 	return (
-		<div className={classNames("absolute w-full gap-4 bg-dark-400", isWide ? "flex" : "hidden")}>
+		<div className={classNames("absolute w-full gap-4 bg-dark-400", wide ? "flex" : "hidden")}>
 			<div
 				className={classNames(
 					"h-[390px] w-[14%]",
@@ -64,7 +82,7 @@ const SliderComponent = () => {
 					onClick={handlePrevSlide}
 					className={classNames(
 						"absolute top-[43%] text-dark-600",
-						isPicture ? "left-[10%]" : "left-[50px]",
+						hidden ? "left-[10%]" : "left-[50px]",
 						"hover:text-white"
 					)}
 				>
@@ -171,7 +189,7 @@ const SliderComponent = () => {
 								href="#"
 								className={classNames(
 									"w-[230px] m-4 overflow-hidden shadow-md shadow-black",
-									!isPicture && "hidden"
+									!hidden && "hidden"
 								)}
 							>
 								<img className="h-full object-cover bg-dark-300" src={POSTER_PATH} alt="movie" />
@@ -195,7 +213,7 @@ const SliderComponent = () => {
 					onClick={handleNextSlide}
 					className={classNames(
 						"absolute top-[43%] text-dark-600",
-						isPicture ? "right-[10%]" : "right-[50px]",
+						hidden ? "right-[10%]" : "right-[50px]",
 						"hover:text-white"
 					)}
 				>
