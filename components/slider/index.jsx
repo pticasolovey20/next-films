@@ -1,17 +1,16 @@
-import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-
+import ContentLoader from "react-content-loader";
 import Link from "next/link";
 
 import { classNames } from "@/utils";
 
 const SliderComponent = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
-
-	const { movies } = useSelector((state) => state.dataReducer);
+	const { movies, loading } = useSelector((state) => state.dataReducer);
 
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
 	const BACK_PATH = `${BASE_URL}${movies[currentSlide]?.backdrop_path}`;
@@ -23,6 +22,28 @@ const SliderComponent = () => {
 	const NEXT_POSTER_PATH = `${BASE_URL}${
 		movies[currentSlide === movies?.length - 1 ? 0 : currentSlide + 1]?.poster_path
 	}`;
+
+	const [hidden, setHidden] = useState(false);
+	const [wide, setWide] = useState(false);
+
+	useEffect(() => {
+		const mediaQueryHidden = window.matchMedia("(min-width: 920px)");
+		const mediaQueryWide = window.matchMedia("(min-width: 590px)");
+
+		const handleHiddenMediaChange = (event) => setHidden(event.matches);
+		const handleWideMediaChange = (event) => setWide(event.matches);
+
+		mediaQueryHidden.addEventListener("change", handleHiddenMediaChange);
+		mediaQueryWide.addEventListener("change", handleWideMediaChange);
+
+		setHidden(mediaQueryHidden.matches);
+		setWide(mediaQueryWide.matches);
+
+		return () => {
+			mediaQueryHidden.removeEventListener("change", handleHiddenMediaChange);
+			mediaQueryWide.removeEventListener("change", handleWideMediaChange);
+		};
+	}, []);
 
 	const handlePrevSlide = () => {
 		setCurrentSlide((prev) => {
@@ -45,7 +66,7 @@ const SliderComponent = () => {
 	};
 
 	return (
-		<div className="absolute w-full flex gap-4 bg-dark-400">
+		<div className={classNames("absolute w-full gap-4 bg-dark-400", wide ? "flex" : "hidden")}>
 			<div
 				className={classNames(
 					"h-[390px] w-[14%]",
@@ -59,7 +80,11 @@ const SliderComponent = () => {
 				<div className="absolute top-0 left-0 w-full h-full bg-dark-100/75" />
 				<button
 					onClick={handlePrevSlide}
-					className={classNames("absolute top-[43%] left-[10%] text-dark-600", "hover:text-white")}
+					className={classNames(
+						"absolute top-[43%] text-dark-600",
+						hidden ? "left-[10%]" : "left-[50px]",
+						"hover:text-white"
+					)}
 				>
 					<svg width="45" height="45" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
@@ -147,9 +172,29 @@ const SliderComponent = () => {
 								</div>
 							</div>
 						</div>
-						<Link href="#" className="w-[230px] m-4 overflow-hidden shadow-md shadow-black">
-							<img className="h-full object-cover bg-dark-300" src={POSTER_PATH} alt="movie" />
-						</Link>
+
+						{loading ? (
+							<ContentLoader
+								speed={3}
+								width="260"
+								height="100%"
+								backgroundColor="#262529"
+								foregroundColor="#1F1E21"
+								className="p-4"
+							>
+								<rect x="0" y="0" rx="5" ry="5" width="100%" height="100%" />
+							</ContentLoader>
+						) : (
+							<Link
+								href="#"
+								className={classNames(
+									"w-[230px] m-4 overflow-hidden shadow-md shadow-black",
+									!hidden && "hidden"
+								)}
+							>
+								<img className="h-full object-cover bg-dark-300" src={POSTER_PATH} alt="movie" />
+							</Link>
+						)}
 					</div>
 				</div>
 			</div>
@@ -166,7 +211,11 @@ const SliderComponent = () => {
 			>
 				<button
 					onClick={handleNextSlide}
-					className={classNames("absolute top-[43%] right-[10%] text-dark-600", "hover:text-white")}
+					className={classNames(
+						"absolute top-[43%] text-dark-600",
+						hidden ? "right-[10%]" : "right-[50px]",
+						"hover:text-white"
+					)}
 				>
 					<svg width="45" height="45" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
