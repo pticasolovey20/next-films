@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMoviesWithGenres, fetchTvSerialsWithGenres } from "@/slices/data/dataSlice";
-import { setWidthAction } from "@/slices/app/appSlice";
 
 import Link from "next/link";
 import * as Separator from "@radix-ui/react-separator";
@@ -17,13 +16,6 @@ const Home = () => {
 	useEffect(() => {
 		dispatch(fetchMoviesWithGenres());
 		dispatch(fetchTvSerialsWithGenres());
-	}, [dispatch]);
-
-	useEffect(() => {
-		const handleResize = () => dispatch(setWidthAction(window.innerWidth));
-		window.addEventListener("resize", handleResize);
-
-		return () => window.removeEventListener("resize", handleResize);
 	}, [dispatch]);
 
 	const { movies, serials, loading } = useSelector((state) => state.dataReducer);
