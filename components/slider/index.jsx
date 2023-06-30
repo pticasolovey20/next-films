@@ -13,8 +13,8 @@ const SliderComponent = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const { movies, loading } = useSelector((state) => state.dataReducer);
 
-	const isPosterVisible = useMediaQuery(920);
-	const isCaruselVisible = useMediaQuery(590);
+	const { matches: posterVis } = useMediaQuery("min-width", 920);
+	const { matches: caruselVis } = useMediaQuery("min-width", 590);
 
 	// variables paths to the poster
 
@@ -28,7 +28,7 @@ const SliderComponent = () => {
 	const handleNextSlide = () => setCurrentSlide((prev) => (prev === movies.length ? 0 : prev + 1));
 
 	return (
-		<div className={classNames("absolute w-full gap-4 bg-dark-400", isCaruselVisible ? "flex" : "hidden")}>
+		<div className={classNames("absolute w-full gap-4 bg-dark-400", caruselVis ? "flex" : "hidden")}>
 			<div
 				className={classNames(
 					"h-[390px] w-[14%]",
@@ -44,7 +44,7 @@ const SliderComponent = () => {
 					onClick={handlePrevSlide}
 					className={classNames(
 						"absolute top-[43%] text-dark-600",
-						isPosterVisible ? "left-[10%]" : "left-[50px]",
+						posterVis ? "left-[10%]" : "left-[50px]",
 						"hover:text-white"
 					)}
 				>
@@ -157,7 +157,7 @@ const SliderComponent = () => {
 								href="#"
 								className={classNames(
 									"w-[230px] m-4 overflow-hidden shadow-md shadow-black",
-									!isPosterVisible && "hidden"
+									!posterVis && "hidden"
 								)}
 							>
 								<img className="h-full object-cover bg-dark-300" src={POSTER_PATH} alt="movie" />
@@ -181,7 +181,7 @@ const SliderComponent = () => {
 					onClick={handleNextSlide}
 					className={classNames(
 						"absolute top-[43%] text-dark-600",
-						isPosterVisible ? "right-[10%]" : "right-[50px]",
+						posterVis ? "right-[10%]" : "right-[50px]",
 						"hover:text-white"
 					)}
 				>
