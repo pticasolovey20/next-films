@@ -1,3 +1,4 @@
+import React from "react";
 import { classNames } from "@/utils";
 
 const InputComponent = ({ name, register, type, placeholder, styles, action }) => {

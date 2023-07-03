@@ -1,7 +1,5 @@
 "use client";
 
-import "client-only";
-
 import { useState, useEffect } from "react";
 
 // param is the type of query, it can be 'min-width' or 'max-width', [type: string]
