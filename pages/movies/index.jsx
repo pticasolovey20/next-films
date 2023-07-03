@@ -3,7 +3,7 @@ import Layout from "@/components/layout";
 const MoviesListPage = () => {
 	return (
 		<Layout>
-			<div>MoviesListPage</div>
+			<div>movies will be here</div>
 		</Layout>
 	);
 };

@@ -1,9 +1,11 @@
+import React from "react";
+
 const Serial = ({ name, poster_path, genres, vote_average, first_air_date }) => {
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
 	const PATH = `${BASE_URL}${poster_path}`;
 
 	return (
-		<div className="flex h-full flex-col select-none">
+		<div className="flex h-full flex-col select-none mx-1">
 			<img className="flex-1 object-cover cursor-pointer" src={PATH} alt={name} />
 			<div className="flex flex-col gap-3 p-4 bg-dark-100">
 				<div className="flex flex-col">

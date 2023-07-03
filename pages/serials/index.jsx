@@ -3,7 +3,7 @@ import Layout from "@/components/layout";
 const SerialsListPage = () => {
 	return (
 		<Layout>
-			<div>SerialsListPage</div>
+			<div>serials will be here</div>
 		</Layout>
 	);
 };

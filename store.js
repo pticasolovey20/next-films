@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import dataReducer from "./slices/data/dataSlice";
+import dataReducer from "./slices/dataSlice";
 
 const rootReducer = combineReducers({ dataReducer });
 

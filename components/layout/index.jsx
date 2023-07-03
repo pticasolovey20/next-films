@@ -1,8 +1,8 @@
-"use client";
-
+import React from "react";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import SliderComponent from "../slider";
+
+import TopSliderComponent from "../top-slider";
 import { classNames } from "@/utils";
 
 const Layout = ({ children }) => {
@@ -12,13 +12,13 @@ const Layout = ({ children }) => {
 	const { matches: caruselVis } = useMediaQuery("min-width", 590);
 
 	return (
-		<>
+		<React.Fragment>
 			{screnMatch ? (
 				<div className="text-white flex flex-col items-center min-h-screen p-4 bg-dark-200">
-					{pathname === "/" && <SliderComponent />}
+					{pathname === "/" && <TopSliderComponent />}
 					<div
 						className={classNames(
-							"lg:w-full 2xl:w-[80%]",
+							"w-full 2xl:w-[80%]",
 							pathname === "/" && caruselVis ? "mt-[375px]" : "mt-0"
 						)}
 					>
@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
 					</p>
 				</div>
 			)}
-		</>
+		</React.Fragment>
 	);
 };
 
