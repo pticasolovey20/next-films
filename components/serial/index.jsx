@@ -1,12 +1,26 @@
 import React from "react";
+import Image from "next/image";
 
 const Serial = ({ name, poster_path, genres, vote_average, first_air_date }) => {
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
 	const PATH = `${BASE_URL}${poster_path}`;
+	const FALLBACK_IMAGE = "fallback.png";
+
+	const handleImageError = (event) => {
+		event.target.onerror = null;
+		event.target.src = FALLBACK_IMAGE;
+	};
 
 	return (
 		<div className="flex h-full flex-col select-none mx-1">
-			<img className="flex-1 object-cover cursor-pointer" src={PATH} alt={name} />
+			<Image
+				className="flex-1 object-cover cursor-pointer"
+				src={PATH}
+				alt={name}
+				width={350}
+				height={525}
+				onError={handleImageError}
+			/>
 			<div className="flex flex-col gap-3 p-4 bg-dark-100">
 				<div className="flex flex-col">
 					<h3 className="w-full truncate font-semibold text-[18px]">{name}</h3>

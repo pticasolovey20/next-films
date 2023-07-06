@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 import TopSliderComponent from "../top-slider";
+import Image from "next/image";
+import Footer from "../footer";
 import { classNames } from "@/utils";
 
 const Layout = ({ children }) => {
@@ -14,20 +16,27 @@ const Layout = ({ children }) => {
 	return (
 		<React.Fragment>
 			{screnMatch ? (
-				<div className="text-white flex flex-col items-center min-h-screen p-4 bg-dark-200">
+				<div className="text-white flex flex-col items-center min-h-screen bg-dark-200">
 					{pathname === "/" && <TopSliderComponent />}
-					<div
+					<main
 						className={classNames(
-							"w-full 2xl:w-[80%]",
+							"w-full 2xl:w-[80%] p-4",
 							pathname === "/" && caruselVis ? "mt-[375px]" : "mt-0"
 						)}
 					>
 						{children}
-					</div>
+					</main>
+					<Footer />
 				</div>
 			) : (
 				<div className="text-white flex flex-col items-center justify-center min-h-screen p-4 bg-dark-200">
-					<img className="h-[150px] aspect-square" src="/rotate_device.png" alt="rotate_device" />
+					<Image
+						className="aspect-square"
+						src="/rotate_device.png"
+						alt="rotate_device"
+						width={200}
+						height={200}
+					/>
 					<p className="text-center text-[20px] p-6">
 						You should rotate the screen or find devices with a larger screen resolution for a better
 						experience

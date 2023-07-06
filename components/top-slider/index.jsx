@@ -7,6 +7,7 @@ import NextArrowIcon from "../icons/NextArrowIcon";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ContentLoader from "react-content-loader";
+import Image from "next/image";
 import Link from "next/link";
 
 import { classNames } from "@/utils";
@@ -30,7 +31,7 @@ const TopSliderComponent = () => {
 	const handleNextSlide = () => setCurrentSlide((prev) => (prev === movies.length ? 0 : prev + 1));
 
 	return (
-		<div className={classNames("absolute w-full gap-4 bg-dark-400", caruselVis ? "flex" : "hidden")}>
+		<div className={classNames("absolute w-full gap-4 bg-dark-400 mt-4", caruselVis ? "flex" : "hidden")}>
 			<div
 				className={classNames(
 					"h-[390px] w-[14%]",
@@ -155,7 +156,13 @@ const TopSliderComponent = () => {
 									!posterVis && "hidden"
 								)}
 							>
-								<img className="h-full object-cover bg-dark-300" src={POSTER_PATH} alt="movie" />
+								<Image
+									className="h-full object-cover bg-dark-300"
+									src={POSTER_PATH}
+									alt="movie"
+									width={300}
+									height={300}
+								/>
 							</Link>
 						)}
 					</div>
