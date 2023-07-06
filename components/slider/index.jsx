@@ -20,7 +20,7 @@ const SliderComponent = ({ children }) => {
 				className={classNames(
 					!isVisible && "hidden",
 					!isVisible || (!arrowsVis && "hidden"),
-					"absolute top-[43%] left-[-32px] text-dark-600",
+					"absolute top-[43%] left-[-40px] text-dark-600",
 					"hover:text-white"
 				)}
 				onClick={onClick}
@@ -35,7 +35,7 @@ const SliderComponent = ({ children }) => {
 			<button
 				className={classNames(
 					!arrowsVis && "hidden",
-					"absolute top-[43%] right-[-32px] text-dark-600 hover:text-white"
+					"absolute top-[43%] right-[-40px] text-dark-600 hover:text-white"
 				)}
 				onClick={onClick}
 			>

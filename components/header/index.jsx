@@ -10,7 +10,7 @@ const Header = () => {
 	const onSumbit = (data) => console.log(data);
 
 	return (
-		<header className="fixed w-full flex justify-center bg-dark-100 z-10 select-none">
+		<header className="fixed w-full flex justify-center bg-[#0e0e11] z-10 select-none">
 			<div className="w-full 2xl:w-[70%] p-4 flex justify-between items-center">
 				<Link href="/" className="text-2xl font-semibold">
 					NextFILM
