@@ -11,6 +11,7 @@ import SkeletonCard from "@/components/skeleton";
 import Movie from "@/components/movie";
 import Serial from "@/components/serial";
 import Description from "@/components/description";
+import { Head } from "next/head";
 
 const Home = () => {
 	const dispatch = useDispatch();

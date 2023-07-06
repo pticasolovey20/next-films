@@ -4,7 +4,7 @@ import Layout from "@/components/layout";
 const MoviesListPage = () => {
 	return (
 		<Layout>
-			<div>movies will be here</div>
+			<div className="mt-8">movies will be here</div>
 		</Layout>
 	);
 };

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Description = () => {
 	return (
-		<div className="w-full flex flex-col 2xl:flex-row py-8 select-none">
+		<div className="w-full flex flex-col 2xl:flex-row mt-8 select-none">
 			<div className="w-full 2xl:w-3/5 flex flex-col gap-4 p-4 text-dark-600">
 				<h2 className="text-white text-2xl font-semibold">
 					Website with the best movies and TV series NextFILMS
