@@ -13,9 +13,12 @@ const initialState = {
 
 export const fetchMoviesWithGenres = createAsyncThunk(
 	"movies/fetchMoviesWithGenres",
-	async (_, { rejectWithValue }) => {
+	async (params, { rejectWithValue }) => {
+		const { page } = params;
 		try {
-			const moviesResponse = await axios.get(`${BASE_URL}discover/movie?api_key=${API_KEY}&year=24717925`);
+			const moviesResponse = await axios.get(
+				`${BASE_URL}discover/movie?api_key=${API_KEY}&year=24717925&page${page}`
+			);
 			const genresResponse = await axios.get(`${BASE_URL}genre/movie/list?api_key=${API_KEY}`);
 
 			const movies = moviesResponse.data.results;
@@ -42,9 +45,10 @@ export const fetchMoviesWithGenres = createAsyncThunk(
 
 export const fetchTvSerialsWithGenres = createAsyncThunk(
 	"tvSerials/fetchTvServialsWithGenres",
-	async (_, { rejectWithValue }) => {
+	async (params, { rejectWithValue }) => {
+		const { page } = params;
 		try {
-			const serialsReponse = await axios.get(`${BASE_URL}discover/tv?api_key=${API_KEY}`);
+			const serialsReponse = await axios.get(`${BASE_URL}discover/tv?api_key=${API_KEY}&page=${page}`);
 			const genresResponse = await axios.get(`${BASE_URL}genre/tv/list?api_key=${API_KEY}`);
 
 			const serials = serialsReponse.data.results;

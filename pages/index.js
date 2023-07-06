@@ -11,14 +11,13 @@ import SkeletonCard from "@/components/skeleton";
 import Movie from "@/components/movie";
 import Serial from "@/components/serial";
 import Description from "@/components/description";
-import { Head } from "next/head";
 
 const Home = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchMoviesWithGenres());
-		dispatch(fetchTvSerialsWithGenres());
+		dispatch(fetchMoviesWithGenres({ page: 1 }));
+		dispatch(fetchTvSerialsWithGenres({ page: 1 }));
 	}, [dispatch]);
 
 	const { movies, serials, loading } = useSelector((state) => state.dataReducer);
