@@ -6,16 +6,20 @@ import PrevArrowIcon from "../icons/PrevArrowIcon";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { classNames } from "@/utils";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const SliderComponent = ({ children }) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const sliderRef = useRef(null);
+
+	const { matches: arrowsVis } = useMediaQuery("min-width", 1400);
 
 	const PrevArrow = ({ onClick }) => {
 		return (
 			<button
 				className={classNames(
 					!isVisible && "hidden",
+					!isVisible || (!arrowsVis && "hidden"),
 					"absolute top-[43%] left-[-32px] text-dark-600",
 					"hover:text-white"
 				)}
@@ -28,7 +32,13 @@ const SliderComponent = ({ children }) => {
 
 	const NextArrow = ({ onClick }) => {
 		return (
-			<button className="absolute top-[43%] right-[-32px] text-dark-600 hover:text-white" onClick={onClick}>
+			<button
+				className={classNames(
+					!arrowsVis && "hidden",
+					"absolute top-[43%] right-[-32px] text-dark-600 hover:text-white"
+				)}
+				onClick={onClick}
+			>
 				<NextArrowIcon />
 			</button>
 		);

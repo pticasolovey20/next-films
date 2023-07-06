@@ -4,7 +4,7 @@ import Layout from "@/components/layout";
 const SerialsListPage = () => {
 	return (
 		<Layout>
-			<div>serials will be here</div>
+			<div className="mt-8">serials will be here</div>
 		</Layout>
 	);
 };

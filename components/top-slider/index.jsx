@@ -31,7 +31,7 @@ const TopSliderComponent = () => {
 	const handleNextSlide = () => setCurrentSlide((prev) => (prev === movies.length ? 0 : prev + 1));
 
 	return (
-		<div className={classNames("absolute w-full gap-4 bg-dark-400 mt-4", caruselVis ? "flex" : "hidden")}>
+		<div className={classNames("mt-20 absolute w-full gap-4 bg-dark-400", caruselVis ? "flex" : "hidden")}>
 			<div
 				className={classNames(
 					"h-[390px] w-[14%]",
