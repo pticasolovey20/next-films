@@ -1,8 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setQuery } from "@/slices/dataSlice";
 import SeearchIcon from "../icons/SeearchIcon";
 import { classNames } from "@/utils";
 
 const InputComponent = ({ name, register, type, placeholder, styles, autoComplete = "off" }) => {
+	const dispatch = useDispatch();
+
 	return (
 		<div className="flex items-center gap-3">
 			<button type="submit">
@@ -19,6 +23,7 @@ const InputComponent = ({ name, register, type, placeholder, styles, autoComplet
 				type={type}
 				placeholder={placeholder}
 				autoComplete={autoComplete}
+				onChange={(event) => dispatch(setQuery(event.target.value))}
 			/>
 		</div>
 	);

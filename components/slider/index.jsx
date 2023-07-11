@@ -49,7 +49,7 @@ const SliderComponent = ({ children }) => {
 		speed: 500,
 		slidesToShow: 5,
 		slidesToScroll: 1,
-		initialSlide: 0 || 15,
+		initialSlide: 0 || 14,
 		prevArrow: <PrevArrow />,
 		nextArrow: <NextArrow />,
 		responsive: [

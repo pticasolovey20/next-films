@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMoviesWithGenres, fetchTvSerialsWithGenres } from "@/slices/dataSlice";
+import { fetchMovies, fetchSerials } from "@/slices/dataSlice";
 
 import Link from "next/link";
 import * as Separator from "@radix-ui/react-separator";
@@ -16,19 +16,19 @@ const Home = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchMoviesWithGenres({ page: 1 }));
-		dispatch(fetchTvSerialsWithGenres({ page: 1 }));
+		dispatch(fetchMovies({ page: 1 }));
+		dispatch(fetchSerials({ page: 1 }));
 	}, [dispatch]);
 
 	const { movies, serials, loading } = useSelector((state) => state.dataReducer);
 
-	const sortedMovies = useMemo(() => {
-		return movies.slice().sort((a, b) => b.popularity - a.popularity);
-	}, [movies]);
+	const filteredMovies = useMemo(() => {
+		return movies.movies?.filter((movie) => movie.poster_path !== null);
+	}, [movies.movies]);
 
-	const sortedSerials = useMemo(() => {
-		return serials.slice().sort((a, b) => b.popularity - a.popularity);
-	}, [serials]);
+	const filteredSerials = useMemo(() => {
+		return serials.serials?.filter((serial) => serial.poster_path !== null);
+	}, [serials.serials]);
 
 	return (
 		<Layout>
@@ -48,7 +48,7 @@ const Home = () => {
 			<SliderComponent>
 				{loading
 					? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
-					: sortedMovies.map((movie) => <Movie key={movie.id} {...movie} />)}
+					: filteredMovies?.map((movie) => <Movie key={movie.id} {...movie} />)}
 			</SliderComponent>
 			<div className="mx-1">
 				<div className="flex items-center justify-between gap-4 mt-4">
@@ -66,7 +66,7 @@ const Home = () => {
 			<SliderComponent>
 				{loading
 					? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
-					: sortedSerials.map((serial) => <Serial key={serial.id} {...serial} />)}
+					: filteredSerials?.map((serial) => <Serial key={serial.id} {...serial} />)}
 			</SliderComponent>
 			<Description />
 		</Layout>
