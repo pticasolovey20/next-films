@@ -54,7 +54,6 @@ export const fetchSerials = createAsyncThunk("serials/fetchSerials", async (para
 	try {
 		if (query) {
 			const { data } = await axios.get(`${BASE_URL}search/tv?api_key=${API_KEY}&query=${query}&page=${page}`);
-
 			const totalPages = data.total_pages;
 
 			return { serials: data.results, totalPages: totalPages };
