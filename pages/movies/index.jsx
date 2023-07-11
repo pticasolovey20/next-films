@@ -1,40 +1,34 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMoviesWithGenres } from "@/slices/dataSlice";
+import { fetchMovies } from "@/slices/dataSlice";
 
-import * as Separator from "@radix-ui/react-separator";
 import Layout from "@/components/layout";
-import SkeletonCard from "@/components/skeleton";
 import Movie from "@/components/movie";
+import SkeletonCard from "@/components/skeleton";
+import Pagination from "@/components/pagination";
 
 const MoviesListPage = () => {
 	const dispatch = useDispatch();
+	const { query, selectedPage } = useSelector((state) => state.dataReducer);
 
 	useEffect(() => {
-		dispatch(fetchMoviesWithGenres({ page: 2 }));
-	}, [dispatch]);
+		dispatch(fetchMovies({ query, page: selectedPage }));
+	}, [query, dispatch, selectedPage]);
 
 	const { loading, movies } = useSelector((state) => state.dataReducer);
 
-	const sortedMovies = useMemo(() => {
-		return movies.slice().sort((a, b) => b.popularity - a.popularity);
-	}, [movies]);
+	const filteredMovies = useMemo(() => {
+		return movies.movies?.filter((movie) => movie.poster_path !== null);
+	}, [movies.movies]);
 
 	return (
 		<Layout>
-			<div className="mt-16 flex flex-col">
-				<h1 className="flex text-[24px]">Movies</h1>
-				<Separator.Root
-					className="mb-4 bg-gray-600 separator"
-					style={{ height: "2px" }}
-					data-orientation="horizontal"
-				/>
-			</div>
 			<div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-2 gap-y-4">
 				{loading
 					? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
-					: sortedMovies.map((movie) => <Movie key={movie.id} {...movie} />)}
+					: filteredMovies?.map((movie) => <Movie key={movie.id} {...movie} />)}
 			</div>
+			<Pagination totalPages={movies.totalPages} />
 		</Layout>
 	);
 };

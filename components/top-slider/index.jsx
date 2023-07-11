@@ -16,19 +16,21 @@ const TopSliderComponent = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const { movies, loading } = useSelector((state) => state.dataReducer);
 
+	const films = movies.movies;
+
 	const { matches: posterVis } = useMediaQuery("min-width", 920);
 	const { matches: caruselVis } = useMediaQuery("min-width", 590);
 
 	// variables paths to the poster
 
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
-	const BACK_PATH = `${BASE_URL}${movies[currentSlide]?.backdrop_path}`;
-	const POSTER_PATH = `${BASE_URL}${movies[currentSlide]?.poster_path}`;
-	const PREV = `${BASE_URL}${movies[currentSlide === 0 ? movies?.length - 1 : currentSlide - 1]?.poster_path}`;
-	const NEXT = `${BASE_URL}${movies[currentSlide === movies?.length - 1 ? 0 : currentSlide + 1]?.poster_path}`;
+	const BACK_PATH = `${BASE_URL}${films?.[currentSlide]?.backdrop_path}`;
+	const POSTER_PATH = `${BASE_URL}${films?.[currentSlide]?.poster_path}`;
+	const PREV = `${BASE_URL}${films?.[currentSlide === 0 ? films?.length - 1 : currentSlide - 1]?.poster_path}`;
+	const NEXT = `${BASE_URL}${films?.[currentSlide === films?.length - 1 ? 0 : currentSlide + 1]?.poster_path}`;
 
-	const handlePrevSlide = () => setCurrentSlide((prev) => (prev === 0 ? movies.length - 1 : prev - 1));
-	const handleNextSlide = () => setCurrentSlide((prev) => (prev === movies.length ? 0 : prev + 1));
+	const handlePrevSlide = () => setCurrentSlide((prev) => (prev === 0 ? films?.length - 1 : prev - 1));
+	const handleNextSlide = () => setCurrentSlide((prev) => (prev === films?.length ? 0 : prev + 1));
 
 	return (
 		<div className={classNames("mt-20 absolute w-full gap-4 bg-dark-400", caruselVis ? "flex" : "hidden")}>
@@ -70,27 +72,28 @@ const TopSliderComponent = () => {
 							<div>
 								<div className="flex items-center gap-4">
 									<Link href="#" className="text-[28px]">
-										{movies[currentSlide]?.title}
+										{films?.[currentSlide]?.title}
 									</Link>
 									<p className="mt-3 text-dark-600">
-										{movies[currentSlide]?.release_date?.slice(0, 4)}
+										{films?.[currentSlide]?.release_date?.slice(0, 4)}
 									</p>
 								</div>
-								<p className="text-[17px] text-dark-600">{movies[currentSlide]?.title}</p>
+								<p className="text-[17px] text-dark-600">{films?.[currentSlide]?.title}</p>
 							</div>
 							<ul className="flex gap-2 text-[14px]">
-								{movies[currentSlide]?.genres?.replace(/,/g, " | ")}
+								{films?.[currentSlide]?.genres?.replace(/,/g, " | ")}
 							</ul>
 							{!loading && (
 								<div className="flex items-end gap-4">
 									<div className="h-[100px] aspect-square">
 										<CircularProgressbar
 											value={
-												movies[currentSlide]?.vote_average &&
-												movies[currentSlide]?.vote_average * 10
+												films?.[currentSlide]?.vote_average &&
+												films?.[currentSlide]?.vote_average * 10
 											}
 											text={
-												movies[currentSlide]?.vote_average && movies[currentSlide]?.vote_average
+												films?.[currentSlide]?.vote_average &&
+												films?.[currentSlide]?.vote_average
 											}
 											strokeWidth={7}
 											styles={buildStyles({
@@ -105,13 +108,13 @@ const TopSliderComponent = () => {
 										<div className="flex flex-col items-start gap-2">
 											<p>
 												Rating IMDb:{" "}
-												{movies[currentSlide]?.vote_average &&
-													movies[currentSlide]?.vote_average}
+												{films?.[currentSlide]?.vote_average &&
+													films?.[currentSlide]?.vote_average}
 											</p>
 											<div className="flex gap-[2px] cursor-pointer">
 												{Array.from({ length: 10 }).map((_, index) => {
 													const filled =
-														index < Math.floor(movies[currentSlide]?.vote_average);
+														index < Math.floor(films?.[currentSlide]?.vote_average);
 
 													return (
 														<svg
