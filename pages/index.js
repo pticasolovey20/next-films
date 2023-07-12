@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies, fetchSerials } from "@/slices/dataSlice";
+import { fetchMovies, fetchSerials, setQuery } from "@/slices/dataSlice";
 
 import Link from "next/link";
 import * as Separator from "@radix-ui/react-separator";
@@ -16,6 +16,7 @@ const Home = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		dispatch(setQuery(""));
 		dispatch(fetchMovies({ page: 1 }));
 		dispatch(fetchSerials({ page: 1 }));
 	}, [dispatch]);
