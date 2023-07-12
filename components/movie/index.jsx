@@ -1,14 +1,15 @@
 import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import StarIcon from "../icons/StarIcon";
 
-const Movie = ({ title, poster_path, genres, vote_average, release_date }) => {
+const Movie = ({ id, title, poster_path, genres, vote_average, release_date }) => {
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
 	const PATH = `${BASE_URL}${poster_path}`;
 	const FALLBACK_IMAGE = "/fallback.png";
 
 	return (
-		<div className="flex flex-col select-none mx-1">
+		<Link href={`/movies/${id}`} className="flex flex-col select-none mx-1">
 			<Image
 				className="flex-1 object-cover cursor-pointer"
 				src={poster_path === null ? FALLBACK_IMAGE : PATH}
@@ -32,7 +33,7 @@ const Movie = ({ title, poster_path, genres, vote_average, release_date }) => {
 					<p>{release_date?.slice(0, 4)}</p>
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

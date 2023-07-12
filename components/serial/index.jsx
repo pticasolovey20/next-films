@@ -1,14 +1,15 @@
 import React from "react";
 import Image from "next/image";
 import StarIcon from "../icons/StarIcon";
+import Link from "next/link";
 
-const Serial = ({ name, poster_path, genres, vote_average, first_air_date }) => {
+const Serial = ({ id, name, poster_path, genres, vote_average, first_air_date }) => {
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
 	const PATH = `${BASE_URL}${poster_path}`;
 	const FALLBACK_IMAGE = "/fallback.png";
 
 	return (
-		<div className="flex h-full flex-col select-none mx-1">
+		<Link href={`/serials/${id}`} className="flex h-full flex-col select-none mx-1">
 			<Image
 				className="flex-1 object-cover cursor-pointer"
 				src={poster_path === null ? FALLBACK_IMAGE : PATH}
@@ -32,7 +33,7 @@ const Serial = ({ name, poster_path, genres, vote_average, first_air_date }) => 
 					<p>{first_air_date?.slice(0, 4)}</p>
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
 
