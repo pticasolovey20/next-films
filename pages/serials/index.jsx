@@ -9,11 +9,11 @@ import Pagination from "@/components/pagination";
 
 const SerialsListPage = () => {
 	const dispatch = useDispatch();
-	const { serialsQuery, serialSelectedPage } = useSelector((state) => state.dataReducer);
+	const { query, serialSelectedPage } = useSelector((state) => state.dataReducer);
 
 	useEffect(() => {
-		dispatch(fetchSerials({ serialsQuery, page: serialSelectedPage }));
-	}, [serialsQuery, dispatch, serialSelectedPage]);
+		dispatch(fetchSerials({ query, page: serialSelectedPage }));
+	}, [query, dispatch, serialSelectedPage]);
 
 	const { loading, serials } = useSelector((state) => state.dataReducer);
 

@@ -10,10 +10,10 @@ const Pagination = ({ totalPages, setAction }) => {
 	const dispatch = useDispatch();
 
 	return (
-		<div className="flex justify-center mt-4">
+		<div className="flex justify-center mt-6">
 			<ReactPaginate
-				nextLabel={<NextArrowIcon w="30" h="30" />}
-				previousLabel={<PrevArrowIcon w="30" h="30" />}
+				nextLabel={<NextArrowIcon w="22" h="22" />}
+				previousLabel={<PrevArrowIcon w="22" h="22" />}
 				onPageChange={(event) => dispatch(setAction(event.selected + 1))}
 				// ----
 				pageRangeDisplayed={9}
@@ -21,7 +21,7 @@ const Pagination = ({ totalPages, setAction }) => {
 				pageCount={totalPages || 0}
 				// ---
 				pageClassName={classNames(
-					"flex items-center justify-center h-[40px] min-w-[40px] px-2 rounded-full border border-dark-400/50",
+					"flex items-center justify-center h-[35px] min-w-[35px] px-2 rounded-full border border-dark-400/50",
 					"hover:border-blue-600 hover:cursor-pointer"
 				)}
 				pageLinkClassName="font-semibold"

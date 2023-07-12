@@ -23,9 +23,8 @@ const SerialDetailPage = () => {
 
 	return (
 		<Layout>
-			<div className="mt-[40px]">{serialDetails?.original_name}</div>
 			<Image
-				className="flex-1 object-cover cursor-pointer"
+				className="mt-10 flex-1 object-cover cursor-pointer"
 				src={serialDetails?.poster_path === null ? FALLBACK_IMAGE : PATH}
 				alt={serialDetails?.name}
 				width={350}
