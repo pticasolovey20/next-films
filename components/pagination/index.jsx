@@ -12,13 +12,8 @@ const Pagination = ({ totalPages, setAction }) => {
 	return (
 		<div className="flex justify-center mt-6">
 			<ReactPaginate
-<<<<<<< HEAD
 				nextLabel={<NextArrowIcon w="22" h="22" />}
 				previousLabel={<PrevArrowIcon w="22" h="22" />}
-=======
-				nextLabel={<NextArrowIcon w="30" h="30" />}
-				previousLabel={<PrevArrowIcon w="30" h="30" />}
->>>>>>> 87a1d6e18515db53879347b974d7925a0d488cc5
 				onPageChange={(event) => dispatch(setAction(event.selected + 1))}
 				// ----
 				pageRangeDisplayed={9}
