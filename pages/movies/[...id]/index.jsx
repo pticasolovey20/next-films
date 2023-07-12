@@ -23,9 +23,8 @@ const MovieDetailPage = () => {
 
 	return (
 		<Layout>
-			<div className="mt-[40px]">{movieDetails?.original_title}</div>
 			<Image
-				className="flex-1 object-cover cursor-pointer"
+				className="mt-10 flex-1 object-cover cursor-pointer"
 				src={movieDetails?.poster_path === null ? FALLBACK_IMAGE : PATH}
 				alt={movieDetails?.title}
 				width={350}

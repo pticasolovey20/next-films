@@ -9,11 +9,11 @@ import Pagination from "@/components/pagination";
 
 const MoviesListPage = () => {
 	const dispatch = useDispatch();
-	const { moviesQuery, movieSelectedPage } = useSelector((state) => state.dataReducer);
+	const { query, movieSelectedPage } = useSelector((state) => state.dataReducer);
 
 	useEffect(() => {
-		dispatch(fetchMovies({ moviesQuery, page: movieSelectedPage }));
-	}, [moviesQuery, dispatch, movieSelectedPage]);
+		dispatch(fetchMovies({ query, page: movieSelectedPage }));
+	}, [query, dispatch, movieSelectedPage]);
 
 	const { loading, movies } = useSelector((state) => state.dataReducer);
 
