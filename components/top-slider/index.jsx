@@ -71,7 +71,7 @@ const TopSliderComponent = () => {
 						<div className="flex flex-col gap-8 p-4">
 							<div>
 								<div className="flex items-center gap-4">
-									<Link href="#" className="text-[28px]">
+									<Link href={`/movies/${films?.[currentSlide]?.id}`} className="text-[28px]">
 										{films?.[currentSlide]?.title}
 									</Link>
 									<p className="mt-3 text-dark-600">
@@ -153,7 +153,7 @@ const TopSliderComponent = () => {
 							</ContentLoader>
 						) : (
 							<Link
-								href="#"
+								href={`/movies/${films?.[currentSlide]?.id}`}
 								className={classNames(
 									"w-[230px] m-4 overflow-hidden shadow-md shadow-black",
 									!posterVis && "hidden"

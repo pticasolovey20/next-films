@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from "@/slices/dataSlice";
+import { fetchMovies, setMovieSelectedPage } from "@/slices/dataSlice";
 
 import Layout from "@/components/layout";
 import Movie from "@/components/movie";
@@ -9,11 +9,11 @@ import Pagination from "@/components/pagination";
 
 const MoviesListPage = () => {
 	const dispatch = useDispatch();
-	const { query, selectedPage } = useSelector((state) => state.dataReducer);
+	const { moviesQuery, movieSelectedPage } = useSelector((state) => state.dataReducer);
 
 	useEffect(() => {
-		dispatch(fetchMovies({ query, page: selectedPage }));
-	}, [query, dispatch, selectedPage]);
+		dispatch(fetchMovies({ moviesQuery, page: movieSelectedPage }));
+	}, [moviesQuery, dispatch, movieSelectedPage]);
 
 	const { loading, movies } = useSelector((state) => state.dataReducer);
 
@@ -28,7 +28,7 @@ const MoviesListPage = () => {
 					? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
 					: filteredMovies?.map((movie) => <Movie key={movie.id} {...movie} />)}
 			</div>
-			<Pagination totalPages={movies.totalPages} />
+			<Pagination totalPages={movies.totalPages} setAction={setMovieSelectedPage} />
 		</Layout>
 	);
 };

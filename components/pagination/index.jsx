@@ -6,7 +6,7 @@ import PrevArrowIcon from "../icons/PrevArrowIcon";
 import NextArrowIcon from "../icons/NextArrowIcon";
 import { classNames } from "@/utils";
 
-const Pagination = ({ totalPages }) => {
+const Pagination = ({ totalPages, setAction }) => {
 	const dispatch = useDispatch();
 
 	return (
@@ -14,7 +14,7 @@ const Pagination = ({ totalPages }) => {
 			<ReactPaginate
 				nextLabel={<NextArrowIcon w="30" h="30" />}
 				previousLabel={<PrevArrowIcon w="30" h="30" />}
-				onPageChange={(event) => dispatch(setSelectedPage(event.selected + 1))}
+				onPageChange={(event) => dispatch(setAction(event.selected + 1))}
 				// ----
 				pageRangeDisplayed={9}
 				marginPagesDisplayed={0}

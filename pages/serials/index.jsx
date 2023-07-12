@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSerials } from "@/slices/dataSlice";
+import { fetchSerials, setSerialSelectedPage } from "@/slices/dataSlice";
 
 import Layout from "@/components/layout";
 import Serial from "@/components/serial";
@@ -9,11 +9,11 @@ import Pagination from "@/components/pagination";
 
 const SerialsListPage = () => {
 	const dispatch = useDispatch();
-	const { query, selectedPage } = useSelector((state) => state.dataReducer);
+	const { serialsQuery, serialSelectedPage } = useSelector((state) => state.dataReducer);
 
 	useEffect(() => {
-		dispatch(fetchSerials({ query, page: selectedPage }));
-	}, [query, dispatch, selectedPage]);
+		dispatch(fetchSerials({ serialsQuery, page: serialSelectedPage }));
+	}, [serialsQuery, dispatch, serialSelectedPage]);
 
 	const { loading, serials } = useSelector((state) => state.dataReducer);
 
@@ -28,7 +28,7 @@ const SerialsListPage = () => {
 					? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
 					: filteredSerials?.map((serial) => <Serial key={serial.id} {...serial} />)}
 			</div>
-			<Pagination totalPages={serials.totalPages} />
+			<Pagination totalPages={serials.totalPages} setAction={setSerialSelectedPage} />
 		</Layout>
 	);
 };
