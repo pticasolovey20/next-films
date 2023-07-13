@@ -101,3 +101,17 @@ export const movies = [
 		runtimeStr: "135 min",
 	},
 ];
+
+export const triggers = [
+	{ label: "overview", value: "first", id: 1 },
+	{ label: "trailers & more", value: "second", id: 2 },
+	{ label: "more like this", value: "third", id: 3 },
+	{ label: "details", value: "fourth", id: 4 },
+];
+
+export const tabs = [
+	{ content: "overview", id: 1, value: "first" },
+	{ content: "trailers & more", id: 2, value: "second" },
+	{ content: "more like this", id: 3, value: "third" },
+	{ content: "details", id: 4, value: "fourth" },
+];
