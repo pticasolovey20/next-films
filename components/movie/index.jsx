@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import StarIcon from "../icons/StarIcon";
+import Rating from "../rating";
 
 const Movie = ({ id, title, poster_path, genres, vote_average, release_date }) => {
 	const BASE_URL = "https://image.tmdb.org/t/p/original";
@@ -24,12 +24,7 @@ const Movie = ({ id, title, poster_path, genres, vote_average, release_date }) =
 					<p className="w-full truncate text-[15px] text-dark-400">{genres?.replace(/,/g, " | ")}</p>
 				</div>
 				<div className="flex justify-between text-[14px]">
-					<div className="flex gap-1 items-center">
-						<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<StarIcon />
-						</svg>
-						<p>{vote_average}</p>
-					</div>
+					<Rating rating={vote_average} />
 					<p>{release_date?.slice(0, 4)}</p>
 				</div>
 			</div>

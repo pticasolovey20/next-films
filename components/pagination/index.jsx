@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setSelectedPage } from "@/slices/dataSlice";
 import ReactPaginate from "react-paginate";
 import PrevArrowIcon from "../icons/PrevArrowIcon";
 import NextArrowIcon from "../icons/NextArrowIcon";
