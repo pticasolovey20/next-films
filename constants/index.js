@@ -1,3 +1,8 @@
+import Details from "@/components/details-tabs/details";
+import LikeThis from "@/components/details-tabs/more-like-this";
+import Overview from "@/components/details-tabs/overview";
+import Trailers from "@/components/details-tabs/trailers";
+
 export const years = [2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010];
 
 export const genres = [
@@ -110,8 +115,8 @@ export const triggers = [
 ];
 
 export const tabs = [
-	{ content: "overview", id: 1, value: "first" },
-	{ content: "trailers & more", id: 2, value: "second" },
-	{ content: "more like this", id: 3, value: "third" },
-	{ content: "details", id: 4, value: "fourth" },
+	{ content: <Overview />, id: 1, value: "first" },
+	{ content: <Trailers />, id: 2, value: "second" },
+	{ content: <LikeThis />, id: 3, value: "third" },
+	{ content: <Details />, id: 4, value: "fourth" },
 ];
