@@ -9,6 +9,7 @@ const initialState = {
 	serials: [],
 	movieDetails: null,
 	serialDetails: null,
+
 	query: "",
 	movieSelectedPage: 1,
 	serialSelectedPage: 1,

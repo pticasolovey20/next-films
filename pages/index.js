@@ -7,7 +7,7 @@ import * as Separator from "@radix-ui/react-separator";
 
 import Layout from "@/components/layout";
 import SliderComponent from "@/components/slider";
-import SkeletonCard from "@/components/skeleton";
+import SkeletonComponent from "@/components/skeleton";
 import Movie from "@/components/movie";
 import Serial from "@/components/serial";
 import Description from "@/components/description";
@@ -48,7 +48,9 @@ const Home = () => {
 			</div>
 			<SliderComponent>
 				{loading
-					? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
+					? Array.from({ length: 5 }).map((_, index) => (
+							<SkeletonComponent styles="flex h-[440px] mx-1" key={index} />
+					  ))
 					: filteredMovies?.map((movie) => <Movie key={movie.id} {...movie} />)}
 			</SliderComponent>
 			<div className="mx-1">
@@ -66,7 +68,9 @@ const Home = () => {
 			</div>
 			<SliderComponent>
 				{loading
-					? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
+					? Array.from({ length: 5 }).map((_, index) => (
+							<SkeletonComponent styles="flex h-[440px] mx-1" key={index} />
+					  ))
 					: filteredSerials?.map((serial) => <Serial key={serial.id} {...serial} />)}
 			</SliderComponent>
 			<Description />

@@ -24,7 +24,7 @@ const Serial = ({ id, name, poster_path, genres, vote_average, first_air_date })
 					<p className="w-full truncate text-[15px] text-dark-400">{genres?.replace(/,/g, " | ")}</p>
 				</div>
 				<div className="flex justify-between text-[14px]">
-					<Rating rating={vote_average} />
+					<Rating gap={2} rating={vote_average} />
 					<p>{first_air_date?.slice(0, 4)}</p>
 				</div>
 			</div>

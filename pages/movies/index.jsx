@@ -4,7 +4,7 @@ import { fetchMovies, setMovieSelectedPage } from "@/slices/dataSlice";
 
 import Layout from "@/components/layout";
 import Movie from "@/components/movie";
-import SkeletonCard from "@/components/skeleton";
+import SkeletonComponent from "@/components/skeleton";
 import Pagination from "@/components/pagination";
 
 const MoviesListPage = () => {
@@ -25,7 +25,9 @@ const MoviesListPage = () => {
 		<Layout>
 			<div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-2 gap-y-4">
 				{loading
-					? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
+					? Array.from({ length: 5 }).map((_, index) => (
+							<SkeletonComponent key={index} styles="flex h-[440px]" />
+					  ))
 					: filteredMovies?.map((movie) => <Movie key={movie.id} {...movie} />)}
 			</div>
 			<Pagination totalPages={movies.totalPages} setAction={setMovieSelectedPage} />

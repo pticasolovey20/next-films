@@ -35,7 +35,7 @@ const Header = () => {
 												movies
 											</Link>
 											<NextArrowIcon h="20" w="20" />
-											<p>{movieDetails?.title}</p>
+											<p className="max-w-[80%] truncate">{movieDetails?.title}</p>
 										</React.Fragment>
 									) : asPath.includes("/serials/") ? (
 										<React.Fragment>
@@ -43,7 +43,7 @@ const Header = () => {
 												serials
 											</Link>
 											<NextArrowIcon h="20" w="20" />
-											<p>{serialDetails?.name}</p>
+											<p className="max-w-[80%] truncate">{serialDetails?.name}</p>
 										</React.Fragment>
 									) : null}
 								</React.Fragment>
